@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sen.daos.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.sen.beans.Student">
+    <id column="sno" jdbcType="VARCHAR" property="sno" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="s_name" jdbcType="VARCHAR" property="sName" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="coll_name" jdbcType="VARCHAR" property="collName" />
+    <result column="classes" jdbcType="VARCHAR" property="classes" />
+    <result column="paper_num" jdbcType="INTEGER" property="paperNum" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    sno, password, s_name, mobile, sex, coll_name, classes, paper_num, image
+  </sql>
+  <select id="selectByExample" parameterType="com.sen.beans.StudentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_student
+    where sno = #{sno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_student
+    where sno = #{sno,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sen.beans.StudentExample">
+    delete from tb_student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sen.beans.Student">
+    insert into tb_student (sno, password, s_name, 
+      mobile, sex, coll_name, 
+      classes, paper_num, image
+      )
+    values (#{sno,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{sName,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{collName,jdbcType=VARCHAR}, 
+      #{classes,jdbcType=VARCHAR}, #{paperNum,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sen.beans.Student">
+    insert into tb_student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sno != null">
+        sno,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="sName != null">
+        s_name,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="collName != null">
+        coll_name,
+      </if>
+      <if test="classes != null">
+        classes,
+      </if>
+      <if test="paperNum != null">
+        paper_num,
+      </if>
+      <if test="image != null">
+        image,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sno != null">
+        #{sno,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sName != null">
+        #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="collName != null">
+        #{collName,jdbcType=VARCHAR},
+      </if>
+      <if test="classes != null">
+        #{classes,jdbcType=VARCHAR},
+      </if>
+      <if test="paperNum != null">
+        #{paperNum,jdbcType=INTEGER},
+      </if>
+      <if test="image != null">
+        #{image,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sen.beans.StudentExample" resultType="java.lang.Integer">
+    select count(*) from tb_student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_student
+    <set>
+      <if test="record.sno != null">
+        sno = #{record.sno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sName != null">
+        s_name = #{record.sName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null">
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.collName != null">
+        coll_name = #{record.collName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classes != null">
+        classes = #{record.classes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paperNum != null">
+        paper_num = #{record.paperNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.image != null">
+        image = #{record.image,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_student
+    set sno = #{record.sno,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      s_name = #{record.sName,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      coll_name = #{record.collName,jdbcType=VARCHAR},
+      classes = #{record.classes,jdbcType=VARCHAR},
+      paper_num = #{record.paperNum,jdbcType=INTEGER},
+      image = #{record.image,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sen.beans.Student">
+    update tb_student
+    <set>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sName != null">
+        s_name = #{sName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="collName != null">
+        coll_name = #{collName,jdbcType=VARCHAR},
+      </if>
+      <if test="classes != null">
+        classes = #{classes,jdbcType=VARCHAR},
+      </if>
+      <if test="paperNum != null">
+        paper_num = #{paperNum,jdbcType=INTEGER},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sno = #{sno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sen.beans.Student">
+    update tb_student
+    set password = #{password,jdbcType=VARCHAR},
+      s_name = #{sName,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      coll_name = #{collName,jdbcType=VARCHAR},
+      classes = #{classes,jdbcType=VARCHAR},
+      paper_num = #{paperNum,jdbcType=INTEGER},
+      image = #{image,jdbcType=VARCHAR}
+    where sno = #{sno,jdbcType=VARCHAR}
+  </update>
+</mapper>

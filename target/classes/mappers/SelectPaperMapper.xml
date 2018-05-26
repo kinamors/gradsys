@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sen.daos.SelectPaperMapper">
+  <resultMap id="BaseResultMap" type="com.sen.beans.SelectPaper">
+    <id column="select_id" jdbcType="INTEGER" property="selectId" />
+    <result column="select_title" jdbcType="VARCHAR" property="selectTitle" />
+    <result column="select_msg" jdbcType="VARCHAR" property="selectMsg" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="add_date" jdbcType="TIMESTAMP" property="addDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    select_id, select_title, select_msg, create_name, add_date
+  </sql>
+  <select id="selectByExample" parameterType="com.sen.beans.SelectPaperExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_select_paper
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_select_paper
+    where select_id = #{selectId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_select_paper
+    where select_id = #{selectId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sen.beans.SelectPaperExample">
+    delete from tb_select_paper
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sen.beans.SelectPaper">
+    insert into tb_select_paper (select_id, select_title, select_msg, 
+      create_name, add_date)
+    values (#{selectId,jdbcType=INTEGER}, #{selectTitle,jdbcType=VARCHAR}, #{selectMsg,jdbcType=VARCHAR}, 
+      #{createName,jdbcType=VARCHAR}, #{addDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sen.beans.SelectPaper">
+    insert into tb_select_paper
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="selectId != null">
+        select_id,
+      </if>
+      <if test="selectTitle != null">
+        select_title,
+      </if>
+      <if test="selectMsg != null">
+        select_msg,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="addDate != null">
+        add_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="selectId != null">
+        #{selectId,jdbcType=INTEGER},
+      </if>
+      <if test="selectTitle != null">
+        #{selectTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="selectMsg != null">
+        #{selectMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="addDate != null">
+        #{addDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sen.beans.SelectPaperExample" resultType="java.lang.Integer">
+    select count(*) from tb_select_paper
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tb_select_paper
+    <set>
+      <if test="record.selectId != null">
+        select_id = #{record.selectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.selectTitle != null">
+        select_title = #{record.selectTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.selectMsg != null">
+        select_msg = #{record.selectMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createName != null">
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addDate != null">
+        add_date = #{record.addDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tb_select_paper
+    set select_id = #{record.selectId,jdbcType=INTEGER},
+      select_title = #{record.selectTitle,jdbcType=VARCHAR},
+      select_msg = #{record.selectMsg,jdbcType=VARCHAR},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      add_date = #{record.addDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sen.beans.SelectPaper">
+    update tb_select_paper
+    <set>
+      <if test="selectTitle != null">
+        select_title = #{selectTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="selectMsg != null">
+        select_msg = #{selectMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="addDate != null">
+        add_date = #{addDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where select_id = #{selectId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sen.beans.SelectPaper">
+    update tb_select_paper
+    set select_title = #{selectTitle,jdbcType=VARCHAR},
+      select_msg = #{selectMsg,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      add_date = #{addDate,jdbcType=TIMESTAMP}
+    where select_id = #{selectId,jdbcType=INTEGER}
+  </update>
+
+
+
+
+  <select id="selectPaperNotChoose" parameterType="com.sen.beans.SelectPaperExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_select_paper
+    WHERE NOT EXISTS(SELECT *FROM tb_student WHERE tb_select_paper.`select_id`=tb_student.`paper_num`)
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectPaperHasChoose" parameterType="com.sen.beans.SelectPaperExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_select_paper p,tb_student s
+    where p.select_id = s.paper_num
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+
+</mapper>

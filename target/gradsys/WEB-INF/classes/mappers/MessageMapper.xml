@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sen.daos.MessageMapper" >
+  <resultMap id="BaseResultMap" type="com.sen.beans.Message" >
+    <id column="m_id" property="mId" jdbcType="INTEGER" />
+    <result column="m_user" property="mUser" jdbcType="VARCHAR" />
+    <result column="m_title" property="mTitle" jdbcType="VARCHAR" />
+    <result column="m_content" property="mContent" jdbcType="VARCHAR" />
+    <result column="m_date" property="mDate" jdbcType="TIMESTAMP" />
+    <result column="tno" property="tno" jdbcType="VARCHAR" />
+    <result column="sno" property="sno" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    m_id, m_user, m_title, m_content, m_date, tno, sno
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sen.beans.MessageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_message
+    where m_id = #{mId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_message
+    where m_id = #{mId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sen.beans.MessageExample" >
+    delete from tb_message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sen.beans.Message" >
+    insert into tb_message (m_id, m_user, m_title, 
+      m_content, m_date, tno, 
+      sno)
+    values (#{mId,jdbcType=INTEGER}, #{mUser,jdbcType=VARCHAR}, #{mTitle,jdbcType=VARCHAR}, 
+      #{mContent,jdbcType=VARCHAR}, #{mDate,jdbcType=TIMESTAMP}, #{tno,jdbcType=VARCHAR}, 
+      #{sno,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sen.beans.Message" >
+    insert into tb_message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mId != null" >
+        m_id,
+      </if>
+      <if test="mUser != null" >
+        m_user,
+      </if>
+      <if test="mTitle != null" >
+        m_title,
+      </if>
+      <if test="mContent != null" >
+        m_content,
+      </if>
+      <if test="mDate != null" >
+        m_date,
+      </if>
+      <if test="tno != null" >
+        tno,
+      </if>
+      <if test="sno != null" >
+        sno,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mId != null" >
+        #{mId,jdbcType=INTEGER},
+      </if>
+      <if test="mUser != null" >
+        #{mUser,jdbcType=VARCHAR},
+      </if>
+      <if test="mTitle != null" >
+        #{mTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="mContent != null" >
+        #{mContent,jdbcType=VARCHAR},
+      </if>
+      <if test="mDate != null" >
+        #{mDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tno != null" >
+        #{tno,jdbcType=VARCHAR},
+      </if>
+      <if test="sno != null" >
+        #{sno,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sen.beans.MessageExample" resultType="java.lang.Integer" >
+    select count(*) from tb_message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_message
+    <set >
+      <if test="record.mId != null" >
+        m_id = #{record.mId,jdbcType=INTEGER},
+      </if>
+      <if test="record.mUser != null" >
+        m_user = #{record.mUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mTitle != null" >
+        m_title = #{record.mTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mContent != null" >
+        m_content = #{record.mContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mDate != null" >
+        m_date = #{record.mDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.tno != null" >
+        tno = #{record.tno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sno != null" >
+        sno = #{record.sno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_message
+    set m_id = #{record.mId,jdbcType=INTEGER},
+      m_user = #{record.mUser,jdbcType=VARCHAR},
+      m_title = #{record.mTitle,jdbcType=VARCHAR},
+      m_content = #{record.mContent,jdbcType=VARCHAR},
+      m_date = #{record.mDate,jdbcType=TIMESTAMP},
+      tno = #{record.tno,jdbcType=VARCHAR},
+      sno = #{record.sno,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sen.beans.Message" >
+    update tb_message
+    <set >
+      <if test="mUser != null" >
+        m_user = #{mUser,jdbcType=VARCHAR},
+      </if>
+      <if test="mTitle != null" >
+        m_title = #{mTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="mContent != null" >
+        m_content = #{mContent,jdbcType=VARCHAR},
+      </if>
+      <if test="mDate != null" >
+        m_date = #{mDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tno != null" >
+        tno = #{tno,jdbcType=VARCHAR},
+      </if>
+      <if test="sno != null" >
+        sno = #{sno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where m_id = #{mId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sen.beans.Message" >
+    update tb_message
+    set m_user = #{mUser,jdbcType=VARCHAR},
+      m_title = #{mTitle,jdbcType=VARCHAR},
+      m_content = #{mContent,jdbcType=VARCHAR},
+      m_date = #{mDate,jdbcType=TIMESTAMP},
+      tno = #{tno,jdbcType=VARCHAR},
+      sno = #{sno,jdbcType=VARCHAR}
+    where m_id = #{mId,jdbcType=INTEGER}
+  </update>
+</mapper>

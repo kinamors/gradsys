@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sen.daos.HalfPartMapper" >
+  <resultMap id="BaseResultMap" type="com.sen.beans.HalfPart" >
+    <id column="sno" property="sno" jdbcType="VARCHAR" />
+    <result column="paper_id" property="paperId" jdbcType="INTEGER" />
+    <result column="paper_title" property="paperTitle" jdbcType="VARCHAR" />
+    <result column="half_progress" property="halfProgress" jdbcType="VARCHAR" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+    <result column="add_date" property="addDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sno, paper_id, paper_title, half_progress, create_name, add_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sen.beans.HalfPartExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_halfpart
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_halfpart
+    where sno = #{sno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_halfpart
+    where sno = #{sno,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sen.beans.HalfPartExample" >
+    delete from tb_halfpart
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sen.beans.HalfPart" >
+    insert into tb_halfpart (sno, paper_id, paper_title, 
+      half_progress, create_name, add_date
+      )
+    values (#{sno,jdbcType=VARCHAR}, #{paperId,jdbcType=INTEGER}, #{paperTitle,jdbcType=VARCHAR}, 
+      #{halfProgress,jdbcType=VARCHAR}, #{createName,jdbcType=VARCHAR}, #{addDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sen.beans.HalfPart" >
+    insert into tb_halfpart
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sno != null" >
+        sno,
+      </if>
+      <if test="paperId != null" >
+        paper_id,
+      </if>
+      <if test="paperTitle != null" >
+        paper_title,
+      </if>
+      <if test="halfProgress != null" >
+        half_progress,
+      </if>
+      <if test="createName != null" >
+        create_name,
+      </if>
+      <if test="addDate != null" >
+        add_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sno != null" >
+        #{sno,jdbcType=VARCHAR},
+      </if>
+      <if test="paperId != null" >
+        #{paperId,jdbcType=INTEGER},
+      </if>
+      <if test="paperTitle != null" >
+        #{paperTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="halfProgress != null" >
+        #{halfProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null" >
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="addDate != null" >
+        #{addDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sen.beans.HalfPartExample" resultType="java.lang.Integer" >
+    select count(*) from tb_halfpart
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_halfpart
+    <set >
+      <if test="record.sno != null" >
+        sno = #{record.sno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paperId != null" >
+        paper_id = #{record.paperId,jdbcType=INTEGER},
+      </if>
+      <if test="record.paperTitle != null" >
+        paper_title = #{record.paperTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.halfProgress != null" >
+        half_progress = #{record.halfProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createName != null" >
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addDate != null" >
+        add_date = #{record.addDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_halfpart
+    set sno = #{record.sno,jdbcType=VARCHAR},
+      paper_id = #{record.paperId,jdbcType=INTEGER},
+      paper_title = #{record.paperTitle,jdbcType=VARCHAR},
+      half_progress = #{record.halfProgress,jdbcType=VARCHAR},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      add_date = #{record.addDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sen.beans.HalfPart" >
+    update tb_halfpart
+    <set >
+      <if test="paperId != null" >
+        paper_id = #{paperId,jdbcType=INTEGER},
+      </if>
+      <if test="paperTitle != null" >
+        paper_title = #{paperTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="halfProgress != null" >
+        half_progress = #{halfProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null" >
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="addDate != null" >
+        add_date = #{addDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where sno = #{sno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sen.beans.HalfPart" >
+    update tb_halfpart
+    set paper_id = #{paperId,jdbcType=INTEGER},
+      paper_title = #{paperTitle,jdbcType=VARCHAR},
+      half_progress = #{halfProgress,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      add_date = #{addDate,jdbcType=TIMESTAMP}
+    where sno = #{sno,jdbcType=VARCHAR}
+  </update>
+</mapper>

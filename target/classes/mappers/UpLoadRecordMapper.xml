@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sen.daos.UpLoadRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.sen.beans.UpLoadRecord" >
+    <id column="up_id" property="upId" jdbcType="INTEGER" />
+    <result column="up_filename" property="upFilename" jdbcType="VARCHAR" />
+    <result column="up_file_type" property="upFileType" jdbcType="VARCHAR" />
+    <result column="up_url" property="upUrl" jdbcType="VARCHAR" />
+    <result column="up_user_name" property="upUserName" jdbcType="VARCHAR" />
+    <result column="up_time" property="upTime" jdbcType="TIMESTAMP" />
+    <result column="up_sno" property="upSno" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    up_id, up_filename, up_file_type, up_url, up_user_name, up_time, up_sno
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sen.beans.UpLoadRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_upload_file
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_upload_file
+    where up_id = #{upId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_upload_file
+    where up_id = #{upId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sen.beans.UpLoadRecordExample" >
+    delete from tb_upload_file
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sen.beans.UpLoadRecord" >
+    insert into tb_upload_file (up_id, up_filename, up_file_type, 
+      up_url, up_user_name, up_time, 
+      up_sno)
+    values (#{upId,jdbcType=INTEGER}, #{upFilename,jdbcType=VARCHAR}, #{upFileType,jdbcType=VARCHAR}, 
+      #{upUrl,jdbcType=VARCHAR}, #{upUserName,jdbcType=VARCHAR}, #{upTime,jdbcType=TIMESTAMP}, 
+      #{upSno,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sen.beans.UpLoadRecord" >
+    insert into tb_upload_file
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="upId != null" >
+        up_id,
+      </if>
+      <if test="upFilename != null" >
+        up_filename,
+      </if>
+      <if test="upFileType != null" >
+        up_file_type,
+      </if>
+      <if test="upUrl != null" >
+        up_url,
+      </if>
+      <if test="upUserName != null" >
+        up_user_name,
+      </if>
+      <if test="upTime != null" >
+        up_time,
+      </if>
+      <if test="upSno != null" >
+        up_sno,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="upId != null" >
+        #{upId,jdbcType=INTEGER},
+      </if>
+      <if test="upFilename != null" >
+        #{upFilename,jdbcType=VARCHAR},
+      </if>
+      <if test="upFileType != null" >
+        #{upFileType,jdbcType=VARCHAR},
+      </if>
+      <if test="upUrl != null" >
+        #{upUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="upUserName != null" >
+        #{upUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="upTime != null" >
+        #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upSno != null" >
+        #{upSno,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sen.beans.UpLoadRecordExample" resultType="java.lang.Integer" >
+    select count(*) from tb_upload_file
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_upload_file
+    <set >
+      <if test="record.upId != null" >
+        up_id = #{record.upId,jdbcType=INTEGER},
+      </if>
+      <if test="record.upFilename != null" >
+        up_filename = #{record.upFilename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upFileType != null" >
+        up_file_type = #{record.upFileType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upUrl != null" >
+        up_url = #{record.upUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upUserName != null" >
+        up_user_name = #{record.upUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upTime != null" >
+        up_time = #{record.upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.upSno != null" >
+        up_sno = #{record.upSno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_upload_file
+    set up_id = #{record.upId,jdbcType=INTEGER},
+      up_filename = #{record.upFilename,jdbcType=VARCHAR},
+      up_file_type = #{record.upFileType,jdbcType=VARCHAR},
+      up_url = #{record.upUrl,jdbcType=VARCHAR},
+      up_user_name = #{record.upUserName,jdbcType=VARCHAR},
+      up_time = #{record.upTime,jdbcType=TIMESTAMP},
+      up_sno = #{record.upSno,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sen.beans.UpLoadRecord" >
+    update tb_upload_file
+    <set >
+      <if test="upFilename != null" >
+        up_filename = #{upFilename,jdbcType=VARCHAR},
+      </if>
+      <if test="upFileType != null" >
+        up_file_type = #{upFileType,jdbcType=VARCHAR},
+      </if>
+      <if test="upUrl != null" >
+        up_url = #{upUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="upUserName != null" >
+        up_user_name = #{upUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="upTime != null" >
+        up_time = #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="upSno != null" >
+        up_sno = #{upSno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where up_id = #{upId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sen.beans.UpLoadRecord" >
+    update tb_upload_file
+    set up_filename = #{upFilename,jdbcType=VARCHAR},
+      up_file_type = #{upFileType,jdbcType=VARCHAR},
+      up_url = #{upUrl,jdbcType=VARCHAR},
+      up_user_name = #{upUserName,jdbcType=VARCHAR},
+      up_time = #{upTime,jdbcType=TIMESTAMP},
+      up_sno = #{upSno,jdbcType=VARCHAR}
+    where up_id = #{upId,jdbcType=INTEGER}
+  </update>
+</mapper>
